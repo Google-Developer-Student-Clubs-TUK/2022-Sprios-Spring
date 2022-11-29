@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb:10
+    container_name: mariaDB
+    ports:
+      - 3306:3306
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - sprios_backend
+    restart: always
+
+networks:
+  sprios_backend:
