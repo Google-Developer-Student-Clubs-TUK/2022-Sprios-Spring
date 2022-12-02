@@ -1,6 +1,5 @@
 package com.sprios.sprios_spring.domain.post.entity;
 
-import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.global.entity.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

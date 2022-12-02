@@ -1,7 +1,5 @@
 package com.sprios.sprios_spring.domain.post.entity;
 
-import com.sprios.sprios_spring.domain.member.entity.Member;
-import com.sprios.sprios_spring.domain.member.repository.MemberRepository;
 import com.sprios.sprios_spring.domain.post.repository.PostLikeRepository;
 import com.sprios.sprios_spring.domain.post.repository.PostRepository;
 import org.junit.jupiter.api.Test;
