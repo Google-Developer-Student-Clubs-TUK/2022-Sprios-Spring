@@ -6,9 +6,12 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
 public class Post extends BaseEntity {
@@ -20,12 +23,18 @@ public class Post extends BaseEntity {
   private String content;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
+  @JoinColumn(name = "writer_id")
   private Member writer;
+
+  @OneToMany private List<PostLike> postLikeList = new ArrayList<>();
 
   @Builder
   private Post(String content, Member writer) {
     this.content = content;
     this.writer = writer;
+  }
+
+  public int getLikeCount() {
+    return this.postLikeList.size();
   }
 }
