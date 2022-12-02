@@ -15,7 +15,7 @@ public class Member {
     @Id
     @Column(name = "member_num")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int num;
+    private Long num;
     @Column(name = "member_id", unique = true, nullable = false)
     private String id;
     @Column(name = "user_password", nullable = false)
@@ -34,9 +34,8 @@ public class Member {
     @Column(name = "user_introduce")
     private String introduce;
 
-    public Member(int num, String id, String password, String name, Gender gender,
+    public Member(String id, String password, String name, Gender gender,
                   String phone, String email, String introduce) {
-        this.num = num;
         this.id = id;
         this.password = password;
         this.name = name;
