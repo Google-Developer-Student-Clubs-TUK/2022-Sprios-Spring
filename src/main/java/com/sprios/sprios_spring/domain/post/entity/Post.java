@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@DynamicInsert
 @ToString(callSuper = true)
 public class Post extends BaseEntity {
   @Id
