@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
 public class Post extends BaseEntity {
