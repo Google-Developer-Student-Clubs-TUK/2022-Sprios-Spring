@@ -1,5 +1,8 @@
 package com.sprios.sprios_spring.domain.post.entity;
 
+import com.sprios.sprios_spring.domain.member.entity.Gender;
+import com.sprios.sprios_spring.domain.member.entity.Member;
+import com.sprios.sprios_spring.domain.member.repository.MemberRepository;
 import com.sprios.sprios_spring.domain.post.repository.PostLikeRepository;
 import com.sprios.sprios_spring.domain.post.repository.PostRepository;
 import org.junit.jupiter.api.Test;
@@ -19,9 +22,9 @@ public class PostTest {
   @Test
   void PostLikeTest() {
     // given
-    Member member1 = new Member();
-    Member member2 = new Member();
-    Member member3 = new Member();
+    Member member1 = Member.builder().account("abcd").password("password").name("김우중").gender(Gender.MALE).build();
+    Member member2 = Member.builder().account("abcde").password("password").name("정훈희").gender(Gender.MALE).build();
+    Member member3 = Member.builder().account("abcdef").password("password").name("오연서").gender(Gender.FEMALE).build();
     Post post1 = Post.builder().content("post1").writer(member1).build();
     Post post2 = Post.builder().content("post2").writer(member2).build();
     memberRepository.saveAll(List.of(member1, member2, member3));
