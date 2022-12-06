@@ -56,6 +56,7 @@ public class Member extends BaseEntity {
       Gender gender,
       String phone,
       String email,
+      String profileImageUrl,
       String introduce) {
     this.account = account;
     this.password = password;
@@ -63,6 +64,7 @@ public class Member extends BaseEntity {
     this.gender = gender;
     this.phone = phone;
     this.email = email;
+    this.profileImageUrl = profileImageUrl;
     this.introduce = introduce;
   }
 }
