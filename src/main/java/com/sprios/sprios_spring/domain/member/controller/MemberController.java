@@ -2,7 +2,6 @@ package com.sprios.sprios_spring.domain.member.controller;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
 import com.sprios.sprios_spring.domain.member.dto.MemberDto;
-import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberDuplicatedException;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.member.service.MemberService;
@@ -35,8 +34,7 @@ public class MemberController {
     if (memberService.isDuplicatedAccount(memberDto.getAccount())) {
       throw new MemberDuplicatedException();
     }
-    Member member = MemberDto.toEntity(memberDto, passwordEncoder);
-    memberService.registrationMember(member);
+    memberService.registrationMember(memberDto);
     return ResponseEntity.ok(ResultResponse.of(MEMBER_REGISTRATION_SUCCESS));
   }
 

@@ -2,6 +2,7 @@ package com.sprios.sprios_spring.domain.member.service;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
 import com.sprios.sprios_spring.domain.member.dto.MemberDto;
+import com.sprios.sprios_spring.domain.member.mapper.MemberMapper;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.member.repository.MemberRepository;
@@ -18,7 +19,9 @@ public class MemberService {
 
   // Member 등록
   @Transactional
-  public void registrationMember(Member member) {
+  public void registrationMember(MemberDto memberDto) {
+    Member member = MemberMapper.toEntity(memberDto);
+    // 비밀번호 암호화
     memberRepository.save(member);
   }
 
