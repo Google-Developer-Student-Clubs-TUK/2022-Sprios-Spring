@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberDto {
+public class MemberRegistrationRequest {
 
   private String account;
 

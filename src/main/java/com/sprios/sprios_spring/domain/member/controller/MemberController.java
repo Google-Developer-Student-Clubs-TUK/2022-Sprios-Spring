@@ -1,7 +1,7 @@
 package com.sprios.sprios_spring.domain.member.controller;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
-import com.sprios.sprios_spring.domain.member.dto.MemberDto;
+import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.exception.MemberDuplicatedException;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.member.service.MemberService;
@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,14 +26,14 @@ public class MemberController {
   public static final String MEMBER_API_URI = "/api/members";
 
   private final MemberService memberService;
-  private final PasswordEncoder passwordEncoder;
 
   @PostMapping
-  public ResponseEntity<ResultResponse> registration(@RequestBody @Valid MemberDto memberDto) {
-    if (memberService.isDuplicatedAccount(memberDto.getAccount())) {
+  public ResponseEntity<ResultResponse> registration(
+      @RequestBody @Valid MemberRegistrationRequest memberRegistrationRequest) {
+    if (memberService.isDuplicatedAccount(memberRegistrationRequest.getAccount())) {
       throw new MemberDuplicatedException();
     }
-    memberService.registrationMember(memberDto);
+    memberService.registrationMember(memberRegistrationRequest);
     return ResponseEntity.ok(ResultResponse.of(MEMBER_REGISTRATION_SUCCESS));
   }
 
@@ -50,7 +49,7 @@ public class MemberController {
 
   @PostMapping("/login")
   public ResponseEntity<ResultResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-    boolean isValidMember = memberService.isValidMember(loginRequest, passwordEncoder);
+    boolean isValidMember = memberService.isValidMember(loginRequest);
 
     if (isValidMember) {
       return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGIN_SUCCESS));
