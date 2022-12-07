@@ -2,9 +2,13 @@ package com.sprios.sprios_spring.domain.member.controller;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
 import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
+import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberDuplicatedException;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
+import com.sprios.sprios_spring.domain.member.service.LoginService;
 import com.sprios.sprios_spring.domain.member.service.MemberService;
+import com.sprios.sprios_spring.global.annotation.LoginMember;
+import com.sprios.sprios_spring.global.annotation.LoginRequired;
 import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,7 @@ public class MemberController {
   public static final String MEMBER_API_URI = "/api/members";
 
   private final MemberService memberService;
+  private final LoginService loginService;
 
   @PostMapping
   public ResponseEntity<ResultResponse> registration(
@@ -52,8 +57,22 @@ public class MemberController {
     boolean isValidMember = memberService.isValidMember(loginRequest);
 
     if (isValidMember) {
+      loginService.login(memberService.findMemberByAccount(loginRequest.getAccount()).getId());
       return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGIN_SUCCESS));
     }
     throw new MemberNotFoundException();
+  }
+
+  @LoginRequired
+  @GetMapping("/logout")
+  public ResponseEntity<ResultResponse> logout() {
+    loginService.logout();
+    return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGOUT_SUCCESS));
+  }
+
+  @LoginRequired
+  @GetMapping("/info")
+  public ResponseEntity<Member> getMemberInfo(@LoginMember Member member) {
+    return ResponseEntity.ok(member);
   }
 }
