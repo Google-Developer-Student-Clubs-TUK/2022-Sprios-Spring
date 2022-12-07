@@ -14,6 +14,7 @@ public enum ResultCode {
   MEMBER_ACCOUNT_DUPLICATED("M002", "회원 아이디 중복"),
   MEMBER_ACCOUNT_NOT_DUPLICATED("M003", "회원 아이디 중복되지않음"),
   MEMBER_LOGIN_SUCCESS("M004", "회원 로그인 성공"),
+  MEMBER_LOGOUT_SUCCESS("M005", "회원 로그아웃 성공"),
   ;
 
   private final String code;
