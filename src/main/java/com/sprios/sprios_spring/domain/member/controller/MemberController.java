@@ -4,6 +4,7 @@ import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
 import com.sprios.sprios_spring.domain.member.dto.MemberDto;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberDuplicatedException;
+import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.member.service.MemberService;
 import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
@@ -27,8 +28,6 @@ public class MemberController {
   public static final String MEMBER_API_URI = "/api/members";
 
   private final MemberService memberService;
-
-  // private final LoginService loginService;
   private final PasswordEncoder passwordEncoder;
 
   @PostMapping
@@ -46,7 +45,7 @@ public class MemberController {
     boolean isDuplicated = memberService.isDuplicatedAccount(account);
 
     if (isDuplicated) {
-      return ResponseEntity.badRequest().body(ResultResponse.of(MEMBER_ACCOUNT_DUPLICATED, true));
+      return ResponseEntity.ok(ResultResponse.of(MEMBER_ACCOUNT_DUPLICATED, true));
     }
     return ResponseEntity.ok(ResultResponse.of(MEMBER_ACCOUNT_NOT_DUPLICATED, false));
   }
@@ -56,9 +55,8 @@ public class MemberController {
     boolean isValidMember = memberService.isValidMember(loginRequest, passwordEncoder);
 
     if (isValidMember) {
-      // loginService.login(memberService.findMemberByAccount(memberDto.getAccount()).getId());
-      return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGIN_SUCCESS, true));
+      return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGIN_SUCCESS));
     }
-    return ResponseEntity.badRequest().body(ResultResponse.of(MEMBER_LOGIN_FAILURE, false));
+    throw new MemberNotFoundException();
   }
 }
