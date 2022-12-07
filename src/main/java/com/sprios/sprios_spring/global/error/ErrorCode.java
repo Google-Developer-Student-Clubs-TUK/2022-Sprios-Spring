@@ -14,7 +14,7 @@ public enum ErrorCode {
   // MemberDomain 도메인
   MEMBER_NOT_FOUND(400, "M001", "회원 찾기 실패"),
   MEMBER_ACCOUNT_DUPLICATED(400, "M002", "회원 아이디 중복"),
-  ;
+  UN_AUTHORIZED_ACCESS(400, "M003", "승인되지 않은 접근");
 
   private final int status;
   private final String code;
