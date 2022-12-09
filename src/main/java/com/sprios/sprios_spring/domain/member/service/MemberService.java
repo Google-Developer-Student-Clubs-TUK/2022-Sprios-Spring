@@ -18,7 +18,6 @@ public class MemberService {
   private final MemberRepository memberRepository;
   private final PasswordUtil passwordUtil;
 
-  @Transactional
   public void registrationMember(MemberRegistrationRequest memberRegistrationRequest) {
     Member member = MemberMapper.toEntity(memberRegistrationRequest);
     member.setEncryptedPassword(passwordUtil.encodingPassword(member.getPassword()));

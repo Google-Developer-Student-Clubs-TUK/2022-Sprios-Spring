@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 public class LoginService {
   private final HttpSession httpSession;
   private final MemberService memberService;
-  public static final String MEMBER_ID = "MEMBER_ID";
+  private static final String MEMBER_ID = "MEMBER_ID";
 
   public void login(long id) {
     httpSession.setAttribute(MEMBER_ID, id);
