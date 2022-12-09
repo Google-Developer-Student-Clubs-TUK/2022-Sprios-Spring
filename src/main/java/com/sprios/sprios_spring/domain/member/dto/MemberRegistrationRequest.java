@@ -1,19 +1,16 @@
 package com.sprios.sprios_spring.domain.member.dto;
 
 import com.sprios.sprios_spring.domain.member.entity.Gender;
-import com.sprios.sprios_spring.domain.member.entity.Member;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberDto {
+public class MemberRegistrationRequest {
 
   private String account;
 
@@ -34,17 +31,4 @@ public class MemberDto {
   private String phone;
   private String profileImageUrl;
   private String introduce;
-
-  public static Member toEntity(MemberDto memberDto, PasswordEncoder passwordEncoder) {
-    return Member.builder()
-        .account(memberDto.getAccount())
-        .password(passwordEncoder.encode(memberDto.getPassword()))
-        .name(memberDto.getName())
-        .gender(memberDto.getGender())
-        .email(memberDto.getEmail())
-        .phone(memberDto.getPhone())
-        .profileImageUrl(memberDto.getProfileImageUrl())
-        .introduce(memberDto.getIntroduce())
-        .build();
-  }
 }

@@ -17,7 +17,7 @@ public class ResultResponse {
     return new ResultResponse(resultCode, "");
   }
 
-  public ResultResponse(ResultCode resultCode, Object data) {
+  private ResultResponse(ResultCode resultCode, Object data) {
     this.code = resultCode.getCode();
     this.message = resultCode.getMessage();
     this.data = data;

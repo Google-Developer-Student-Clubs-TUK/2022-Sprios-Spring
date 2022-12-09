@@ -1,17 +1,19 @@
 package com.sprios.sprios_spring.domain.member.controller;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
-import com.sprios.sprios_spring.domain.member.dto.MemberDto;
+import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberDuplicatedException;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
+import com.sprios.sprios_spring.domain.member.service.LoginService;
 import com.sprios.sprios_spring.domain.member.service.MemberService;
+import com.sprios.sprios_spring.global.annotation.LoginMember;
+import com.sprios.sprios_spring.global.annotation.LoginRequired;
 import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,15 +30,15 @@ public class MemberController {
   public static final String MEMBER_API_URI = "/api/members";
 
   private final MemberService memberService;
-  private final PasswordEncoder passwordEncoder;
+  private final LoginService loginService;
 
   @PostMapping
-  public ResponseEntity<ResultResponse> registration(@RequestBody @Valid MemberDto memberDto) {
-    if (memberService.isDuplicatedAccount(memberDto.getAccount())) {
+  public ResponseEntity<ResultResponse> registration(
+      @RequestBody @Valid MemberRegistrationRequest memberRegistrationRequest) {
+    if (memberService.isDuplicatedAccount(memberRegistrationRequest.getAccount())) {
       throw new MemberDuplicatedException();
     }
-    Member member = MemberDto.toEntity(memberDto, passwordEncoder);
-    memberService.registrationMember(member);
+    memberService.registrationMember(memberRegistrationRequest);
     return ResponseEntity.ok(ResultResponse.of(MEMBER_REGISTRATION_SUCCESS));
   }
 
@@ -52,11 +54,25 @@ public class MemberController {
 
   @PostMapping("/login")
   public ResponseEntity<ResultResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-    boolean isValidMember = memberService.isValidMember(loginRequest, passwordEncoder);
+    boolean isValidMember = memberService.isValidMember(loginRequest);
 
     if (isValidMember) {
+      loginService.login(memberService.findMemberByAccount(loginRequest.getAccount()).getId());
       return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGIN_SUCCESS));
     }
     throw new MemberNotFoundException();
+  }
+
+  @LoginRequired
+  @GetMapping("/logout")
+  public ResponseEntity<ResultResponse> logout() {
+    loginService.logout();
+    return ResponseEntity.ok(ResultResponse.of(MEMBER_LOGOUT_SUCCESS));
+  }
+
+  @LoginRequired
+  @GetMapping("/info")
+  public ResponseEntity<Member> getMemberInfo(@LoginMember Member member) {
+    return ResponseEntity.ok(member);
   }
 }

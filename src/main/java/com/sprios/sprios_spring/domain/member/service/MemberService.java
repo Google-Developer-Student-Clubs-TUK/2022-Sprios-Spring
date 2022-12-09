@@ -1,13 +1,14 @@
 package com.sprios.sprios_spring.domain.member.service;
 
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
-import com.sprios.sprios_spring.domain.member.dto.MemberDto;
+import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
+import com.sprios.sprios_spring.domain.member.mapper.MemberMapper;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.member.repository.MemberRepository;
+import com.sprios.sprios_spring.global.util.PasswordUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberService {
   private final MemberRepository memberRepository;
+  private final PasswordUtil passwordUtil;
 
-  // Member 등록
-  @Transactional
-  public void registrationMember(Member member) {
+  public void registrationMember(MemberRegistrationRequest memberRegistrationRequest) {
+    Member member = MemberMapper.toEntity(memberRegistrationRequest);
+    member.setEncryptedPassword(passwordUtil.encodingPassword(member.getPassword()));
     memberRepository.save(member);
   }
 
@@ -34,11 +36,9 @@ public class MemberService {
     return memberRepository.findById(id).orElseThrow(MemberNotFoundException::new);
   }
 
-  // 회원 정보가 유효한지 확인
-  public boolean isValidMember(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+  public boolean isValidMember(LoginRequest loginRequest) {
     Member member = findMemberByAccount(loginRequest.getAccount());
-    // DTO로 전달된 비밀번호와 DB에 저장된 암호화된 비밀번호가 같은지 확인
-    if (passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
+    if (passwordUtil.isSamePassword(loginRequest.getPassword(), member.getPassword())) {
       return true;
     }
     return false;
