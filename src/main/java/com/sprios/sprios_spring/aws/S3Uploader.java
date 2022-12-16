@@ -19,7 +19,7 @@ import java.io.IOException;
 public class S3Uploader {
 
   private final AmazonS3Client amazonS3Client;
-
+  private final String BASE_IMG_NAME = "base_profile";
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
 
@@ -29,12 +29,16 @@ public class S3Uploader {
   }
 
   private String upload(File file, String dirName) {
-    String fileName = dirName + "/" + file.getName();
+    String fileName = convertToFilename(file.getName(), dirName);
     String uploadImageUrl = putS3(file, fileName);
 
     removeNewFile(file);
 
     return uploadImageUrl;
+  }
+
+  private String convertToFilename(String fileName, String dirName) {
+    return dirName + "/" + fileName;
   }
 
   private void removeNewFile(File file) {
@@ -68,5 +72,17 @@ public class S3Uploader {
     } catch (IOException e) {
       throw new FileConvertFailException();
     }
+  }
+
+  public void deleteImage(String imgName, String dirName) {
+    if(imgName.equals(BASE_IMG_NAME)) {
+      return;
+    }
+    final String fileName = convertToFilename(imgName, dirName);
+    deleteS3(fileName);
+  }
+
+  private void deleteS3(String fileName) {
+    amazonS3Client.deleteObject(bucket, fileName);
   }
 }
