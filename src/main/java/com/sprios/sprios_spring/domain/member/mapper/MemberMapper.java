@@ -5,7 +5,7 @@ import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 
 public class MemberMapper {
-  public static Member toEntity(MemberRegistrationRequest memberRegistrationRequest, String imgUrl) {
+  public static Member toEntity(MemberRegistrationRequest memberRegistrationRequest) {
     return Member.builder()
         .account(memberRegistrationRequest.getAccount())
         .password(memberRegistrationRequest.getPassword())
@@ -13,7 +13,6 @@ public class MemberMapper {
         .gender(memberRegistrationRequest.getGender())
         .email(memberRegistrationRequest.getEmail())
         .phone(memberRegistrationRequest.getPhone())
-        .profileImageUrl(imgUrl)
         .introduce(memberRegistrationRequest.getIntroduce())
         .build();
   }
