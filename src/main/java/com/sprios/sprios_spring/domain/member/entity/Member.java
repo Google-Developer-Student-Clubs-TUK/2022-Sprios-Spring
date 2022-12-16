@@ -1,6 +1,8 @@
 package com.sprios.sprios_spring.domain.member.entity;
 
 import com.sprios.sprios_spring.global.entity.BaseEntity;
+import com.sprios.sprios_spring.global.vo.Image;
+import com.sprios.sprios_spring.global.vo.ImageType;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -14,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "members")
 public class Member extends BaseEntity {
   private static final String DEFAULT_IMAGE_URL =
-      "https://bluetifulc-spring-bucket.s3.ap-northeast-2.amazonaws.com/member/base-UUID_base.PNG";
+      "https://identitylessimgserver.s3.ap-northeast-2.amazonaws.com/member/base_profile.png";
   private static final String IMAGE_URL_COLUMN_DEFINITION =
       "varchar(500) default \'" + DEFAULT_IMAGE_URL + "\'";
 
@@ -42,8 +44,14 @@ public class Member extends BaseEntity {
   @Column(name = "user_phone")
   private String phone;
 
-  @Column(name = "user_profile_image_url", columnDefinition = IMAGE_URL_COLUMN_DEFINITION)
-  private String profileImageUrl;
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(name = "imgUrl", column = @Column(name = "member_image_url")),
+      @AttributeOverride(name = "imgType", column = @Column(name = "member_image_type")),
+      @AttributeOverride(name = "imgName", column = @Column(name = "member_image_name")),
+      @AttributeOverride(name = "imgUUID", column = @Column(name = "member_image_uuid"))
+  })
+  private Image image;
 
   @Column(name = "user_introduce")
   private String introduce;
@@ -56,7 +64,6 @@ public class Member extends BaseEntity {
       Gender gender,
       String phone,
       String email,
-      String profileImageUrl,
       String introduce) {
     this.account = account;
     this.password = password;
@@ -64,8 +71,12 @@ public class Member extends BaseEntity {
     this.gender = gender;
     this.phone = phone;
     this.email = email;
-    this.profileImageUrl = profileImageUrl;
-    this.introduce = introduce;
+    this.image = Image.builder()
+        .imgName("base_profile")
+        .imgType(ImageType.PNG)
+        .imgUrl(DEFAULT_IMAGE_URL)
+        .imgUUID("base-UUID").build();
+    this.introduce = "";
   }
 
   public void setEncryptedPassword(String encryptedPassword) {
