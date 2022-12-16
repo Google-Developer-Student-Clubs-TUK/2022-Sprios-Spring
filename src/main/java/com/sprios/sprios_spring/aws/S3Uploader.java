@@ -23,7 +23,7 @@ public class S3Uploader {
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
 
-  public String upload(MultipartFile multipartFile, String dirName)  {
+  public String uploadImage(MultipartFile multipartFile, String dirName)  {
     File uploadFile = convert(multipartFile);
     return upload(uploadFile, dirName);
   }
@@ -55,15 +55,18 @@ public class S3Uploader {
   }
 
   private File convert(MultipartFile multipartFile)  {
-    final File convertFile = new File(multipartFile.getOriginalFilename());
+
     try {
+      final File convertFile = new File(multipartFile.getOriginalFilename());
       if(convertFile.createNewFile()) {
-        FileOutputStream fos = new FileOutputStream(convertFile);
-        fos.write(multipartFile.getBytes());
+        try(FileOutputStream fos = new FileOutputStream(convertFile)) {
+          fos.write(multipartFile.getBytes());
+        }
+        return convertFile;
       }
+      throw new FileConvertFailException();
     } catch (IOException e) {
       throw new FileConvertFailException();
     }
-    return convertFile;
   }
 }
