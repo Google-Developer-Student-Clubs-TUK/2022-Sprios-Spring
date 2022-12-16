@@ -14,11 +14,7 @@ public class ImageUtil {
   private static final int FIEL_TYPE = 1;
   public static Image convertMultipartFiletoImage(MultipartFile file, String Url) {
     final String originalName = Normalizer.normalize(file.getOriginalFilename(), Normalizer.Form.NFC);
-    System.out.println(originalName);
     String[] fileInfo = originalName.split("\\.");
-    for(String a : fileInfo) {
-      System.out.println(a);
-    }
 
     if(!isSupportedType(fileInfo[FIEL_TYPE])) {
       throw new NotSupportedImageTypeException();
