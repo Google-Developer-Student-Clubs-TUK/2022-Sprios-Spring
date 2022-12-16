@@ -17,10 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberService {
-  private static final String MEMBER_S3_DIRNAME = "member";
   private final MemberRepository memberRepository;
   private final PasswordUtil passwordUtil;
-  private final S3Uploader s3Uploader;
 
   @Transactional
   public void registrationMember(MemberRegistrationRequest memberRegistrationRequest) {
@@ -47,10 +45,6 @@ public class MemberService {
       return true;
     }
     return false;
-  }
-
-  private String uploadImgS3(MultipartFile file) {
-    return s3Uploader.uploadImage(file, MEMBER_S3_DIRNAME);
   }
 
   //    public boolean isValidPassword(Member member, PasswordRequest passwordRequest,
