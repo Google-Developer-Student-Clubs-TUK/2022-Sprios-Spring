@@ -24,7 +24,7 @@ public class MemberService {
 
   @Transactional
   public void registrationMember(MemberRegistrationRequest memberRegistrationRequest) {
-    Member member = MemberMapper.toEntity(memberRegistrationRequest, uploadImgS3(memberRegistrationRequest.getProfileImagFile()));
+    Member member = MemberMapper.toEntity(memberRegistrationRequest);
     member.setEncryptedPassword(passwordUtil.encodingPassword(member.getPassword()));
     memberRepository.save(member);
   }
@@ -50,7 +50,7 @@ public class MemberService {
   }
 
   private String uploadImgS3(MultipartFile file) {
-    return s3Uploader.upload(file, MEMBER_S3_DIRNAME);
+    return s3Uploader.uploadImage(file, MEMBER_S3_DIRNAME);
   }
 
   //    public boolean isValidPassword(Member member, PasswordRequest passwordRequest,
