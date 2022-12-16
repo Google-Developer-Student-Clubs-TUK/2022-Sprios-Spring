@@ -30,6 +30,5 @@ public class MemberRegistrationRequest {
   private String email;
 
   private String phone;
-  private MultipartFile profileImagFile;
   private String introduce;
 }
