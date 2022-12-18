@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: mariadb:10
+    image: mariadb:10.10.2
     container_name: mariaDB
     ports:
       - 3306:3306
