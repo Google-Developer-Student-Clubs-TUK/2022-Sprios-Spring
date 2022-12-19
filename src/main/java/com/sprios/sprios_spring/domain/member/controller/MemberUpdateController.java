@@ -20,7 +20,7 @@ import static com.sprios.sprios_spring.domain.member.controller.MemberUpdateCont
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @RequestMapping(MEMBER_API_URI)
 public class MemberUpdateController {
-  public static final String MEMBER_API_URI = "/api/update";
+  public static final String MEMBER_API_URI = "/api/member/update";
   private final MemberUpdateService memberUpdateService;
 
   @PostMapping("/img")
