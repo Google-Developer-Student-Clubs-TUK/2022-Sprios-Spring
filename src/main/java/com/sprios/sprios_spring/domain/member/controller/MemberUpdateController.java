@@ -18,7 +18,7 @@ import static com.sprios.sprios_spring.domain.member.controller.MemberUpdateCont
 
 @RestController
 @Slf4j
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @RequestMapping(MEMBER_API_URI)
 public class MemberUpdateController {
   public static final String MEMBER_API_URI = "/api/update";
