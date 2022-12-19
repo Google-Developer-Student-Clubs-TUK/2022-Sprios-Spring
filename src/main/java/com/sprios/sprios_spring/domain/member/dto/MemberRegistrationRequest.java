@@ -2,7 +2,6 @@ package com.sprios.sprios_spring.domain.member.dto;
 
 import com.sprios.sprios_spring.domain.member.entity.Gender;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;

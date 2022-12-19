@@ -1,6 +1,5 @@
 package com.sprios.sprios_spring.domain.member.service;
 
-import com.sprios.sprios_spring.aws.S3Uploader;
 import com.sprios.sprios_spring.domain.member.dto.LoginRequest;
 import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.mapper.MemberMapper;
@@ -12,7 +11,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)

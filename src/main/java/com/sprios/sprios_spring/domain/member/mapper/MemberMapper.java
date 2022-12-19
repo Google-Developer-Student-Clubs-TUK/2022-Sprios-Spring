@@ -1,6 +1,5 @@
 package com.sprios.sprios_spring.domain.member.mapper;
 
-import com.sprios.sprios_spring.aws.S3Uploader;
 import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 
