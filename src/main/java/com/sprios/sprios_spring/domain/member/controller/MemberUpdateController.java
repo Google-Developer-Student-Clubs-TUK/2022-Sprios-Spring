@@ -1,7 +1,6 @@
 package com.sprios.sprios_spring.domain.member.controller;
 
-import com.sprios.sprios_spring.domain.member.service.LoginService;
-import com.sprios.sprios_spring.domain.member.service.MemberService;
+import com.sprios.sprios_spring.domain.member.service.MemberUpdateService;
 import com.sprios.sprios_spring.global.result.ResultCode;
 import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
@@ -22,11 +21,11 @@ import static com.sprios.sprios_spring.domain.member.controller.MemberUpdateCont
 @RequestMapping(MEMBER_API_URI)
 public class MemberUpdateController {
   public static final String MEMBER_API_URI = "/api/update";
-  private final LoginService loginService;
+  private final MemberUpdateService memberUpdateService;
 
   @PostMapping("/img")
   public ResponseEntity<ResultResponse> uploadImage(@RequestParam MultipartFile uploadImage) {
-    loginService.uploadImgS3(uploadImage);
+    memberUpdateService.uploadImgS3(uploadImage);
     return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_IMAGEUPDATE_SUCCESS, true));
   }
 }
