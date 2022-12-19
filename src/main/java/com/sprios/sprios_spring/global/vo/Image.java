@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image {
