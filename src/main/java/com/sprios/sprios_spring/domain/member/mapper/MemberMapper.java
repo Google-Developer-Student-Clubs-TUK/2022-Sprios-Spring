@@ -1,5 +1,6 @@
 package com.sprios.sprios_spring.domain.member.mapper;
 
+import com.sprios.sprios_spring.domain.member.dto.MemberPostInfoResponse;
 import com.sprios.sprios_spring.domain.member.dto.MemberRegistrationRequest;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 
@@ -13,6 +14,14 @@ public class MemberMapper {
         .email(memberRegistrationRequest.getEmail())
         .phone(memberRegistrationRequest.getPhone())
         .introduce(memberRegistrationRequest.getIntroduce())
+        .build();
+  }
+
+  public static MemberPostInfoResponse toDto(Member member) {
+    return MemberPostInfoResponse.builder()
+        .id(member.getId())
+        .account(member.getAccount())
+        .imageUrl(member.getImage().getImgUrl())
         .build();
   }
 }
