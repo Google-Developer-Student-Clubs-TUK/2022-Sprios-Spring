@@ -30,4 +30,5 @@ public class LoginService {
   public Long getLoginMemberId() {
     return (Long) httpSession.getAttribute(MEMBER_ID);
   }
+
 }

@@ -12,7 +12,6 @@ public class MemberMapper {
         .gender(memberRegistrationRequest.getGender())
         .email(memberRegistrationRequest.getEmail())
         .phone(memberRegistrationRequest.getPhone())
-        .profileImageUrl(memberRegistrationRequest.getProfileImageUrl())
         .introduce(memberRegistrationRequest.getIntroduce())
         .build();
   }

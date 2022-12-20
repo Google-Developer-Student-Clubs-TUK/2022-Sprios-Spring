@@ -29,6 +29,5 @@ public class MemberRegistrationRequest {
   private String email;
 
   private String phone;
-  private String profileImageUrl;
   private String introduce;
 }
