@@ -9,12 +9,12 @@ import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.sprios.sprios_spring.global.result.ResultCode.POST_CREATE_SUCCESS;
 
@@ -28,8 +28,9 @@ public class PostController {
   @PostMapping
   public ResponseEntity<ResultResponse> createPost(
       @LoginMember @ApiIgnore Member loginMember,
-      @RequestBody @Valid PostCreateRequest postCreateRequest) {
-    postService.createPost(postCreateRequest, loginMember);
+      @RequestPart(value = "images", required = false) List<MultipartFile> images,
+      @RequestPart(value = "postCreateRequest") @Valid PostCreateRequest postCreateRequest) {
+    postService.createPost(postCreateRequest, loginMember, images);
     return ResponseEntity.ok(ResultResponse.of(POST_CREATE_SUCCESS));
   }
 }
