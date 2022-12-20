@@ -43,9 +43,9 @@ public class PostService {
     }
   }
 
-  public List<PostInfoResponse> getPostListByMemberId(Long memberId) {
+  public List<PostInfoResponse> getPostListByWriterId(Long writerId) {
     List<Post> posts =
-        postRepository.findAllByWriterId(memberId).orElseThrow(MemberNotFoundException::new);
+        postRepository.findAllByWriterId(writerId).orElseThrow(MemberNotFoundException::new);
     return postMapper.toDtoList(posts);
   }
 }

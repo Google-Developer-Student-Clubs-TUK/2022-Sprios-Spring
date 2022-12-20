@@ -2,6 +2,7 @@ package com.sprios.sprios_spring.domain.post.controller;
 
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.domain.post.dto.PostCreateRequest;
+import com.sprios.sprios_spring.domain.post.dto.PostInfoResponse;
 import com.sprios.sprios_spring.domain.post.service.PostService;
 import com.sprios.sprios_spring.global.annotation.LoginMember;
 import com.sprios.sprios_spring.global.annotation.LoginRequired;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 
 import java.util.List;
 
+import static com.sprios.sprios_spring.global.result.ResultCode.WRITER_POST_GET_SUCCESS;
 import static com.sprios.sprios_spring.global.result.ResultCode.POST_CREATE_SUCCESS;
 
 @RestController
@@ -32,5 +34,11 @@ public class PostController {
       @RequestPart(value = "postCreateRequest") @Valid PostCreateRequest postCreateRequest) {
     postService.createPost(postCreateRequest, loginMember, images);
     return ResponseEntity.ok(ResultResponse.of(POST_CREATE_SUCCESS));
+  }
+
+  @GetMapping("/writer")
+  public ResponseEntity<ResultResponse> getMemberPostList(@RequestParam Long id) {
+    List<PostInfoResponse> postInfoResponseList = postService.getPostListByWriterId(id);
+    return ResponseEntity.ok(ResultResponse.of(WRITER_POST_GET_SUCCESS, postInfoResponseList));
   }
 }
