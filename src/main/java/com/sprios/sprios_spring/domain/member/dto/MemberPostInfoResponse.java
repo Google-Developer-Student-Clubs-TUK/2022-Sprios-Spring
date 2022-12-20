@@ -2,6 +2,7 @@ package com.sprios.sprios_spring.domain.member.dto;
 
 import lombok.*;
 
+@Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberPostInfoResponse {
