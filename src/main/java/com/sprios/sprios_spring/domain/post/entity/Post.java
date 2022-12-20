@@ -3,7 +3,6 @@ package com.sprios.sprios_spring.domain.post.entity;
 import com.sprios.sprios_spring.domain.member.entity.Member;
 import com.sprios.sprios_spring.global.entity.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,13 +26,15 @@ public class Post extends BaseEntity {
 
   @OneToMany private List<PostLike> postLikeList = new ArrayList<>();
 
+  @OneToMany private List<PostImage> postImageList = new ArrayList<>();
+
   @Builder
   private Post(String content, Member writer) {
     this.content = content;
     this.writer = writer;
   }
 
-  public int getLikeCount() {
+  public Integer getLikeCount() {
     return this.postLikeList.size();
   }
 }
