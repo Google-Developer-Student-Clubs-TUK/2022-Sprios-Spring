@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity(name = "post")
 @Getter
@@ -24,9 +25,11 @@ public class Post extends BaseEntity {
   @JoinColumn(name = "writer_id")
   private Member writer;
 
-  @OneToMany private List<PostLike> postLikeList = new ArrayList<>();
+  @OneToMany(mappedBy = "post")
+  private List<PostLike> postLikeList = new ArrayList<>();
 
-  @OneToMany private List<PostImage> postImageList = new ArrayList<>();
+  @OneToMany(mappedBy = "post")
+  private List<PostImage> postImageList = new ArrayList<>();
 
   @Builder
   private Post(String content, Member writer) {
@@ -36,5 +39,11 @@ public class Post extends BaseEntity {
 
   public Integer getLikeCount() {
     return this.postLikeList.size();
+  }
+
+  public List<String> getImageUrlList() {
+    return this.postImageList.stream()
+        .map(image -> image.getImage().getImgUrl())
+        .collect(Collectors.toList());
   }
 }
