@@ -2,7 +2,9 @@ package com.sprios.sprios_spring.domain.post.service;
 
 import com.sprios.sprios_spring.aws.S3Uploader;
 import com.sprios.sprios_spring.domain.member.entity.Member;
+import com.sprios.sprios_spring.domain.member.exception.MemberNotFoundException;
 import com.sprios.sprios_spring.domain.post.dto.PostCreateRequest;
+import com.sprios.sprios_spring.domain.post.dto.PostInfoResponse;
 import com.sprios.sprios_spring.domain.post.entity.Post;
 import com.sprios.sprios_spring.domain.post.entity.PostImage;
 import com.sprios.sprios_spring.domain.post.mapper.PostMapper;
@@ -28,12 +30,10 @@ public class PostService {
   private final S3Uploader s3Uploader;
 
   @Transactional
-  public void createPost(PostCreateRequest postCreateRequest, Member loginMember, List<MultipartFile> imageFiles) {
+  public void createPost(
+      PostCreateRequest postCreateRequest, Member loginMember, List<MultipartFile> imageFiles) {
     Post post = postMapper.toEntity(postCreateRequest, loginMember);
     postRepository.save(post);
-    System.out.println(imageFiles);
-    System.out.println(imageFiles.size());
-//    List<MultipartFile> imageFiles = postCreateRequest.getImageFiles();
     for (int i = 0; i < imageFiles.size(); i++) {
       MultipartFile imageFile = imageFiles.get(i);
       String imgUrl = s3Uploader.uploadImage(imageFile, POST_S3_DIRNAME);
@@ -41,5 +41,11 @@ public class PostService {
       postImageRepository.save(
           PostImage.builder().image(newImage).imageNumber(i).post(post).build());
     }
+  }
+
+  public List<PostInfoResponse> getPostListByMemberId(Long memberId) {
+    List<Post> posts =
+        postRepository.findAllByWriterId(memberId).orElseThrow(MemberNotFoundException::new);
+    return postMapper.toDtoList(posts);
   }
 }
