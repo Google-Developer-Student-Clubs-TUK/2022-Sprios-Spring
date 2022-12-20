@@ -16,10 +16,11 @@ public enum ResultCode {
   MEMBER_LOGIN_SUCCESS("M004", "회원 로그인 성공"),
   MEMBER_LOGOUT_SUCCESS("M005", "회원 로그아웃 성공"),
   MEMBER_IMAGEUPDATE_SUCCESS("M006", "프로필 이미지 변경 성공"),
-  MEMBER_UPDATE_SUCCESS("M007", "회원 정보 수정 성공")
+  MEMBER_UPDATE_SUCCESS("M007", "회원 정보 수정 성공"),
 
   // Post
   POST_CREATE_SUCCESS("P001", "게시물 생성 성공"),
+  WRITER_POST_GET_SUCCESS("P002", "작성자의 게시물들 조회 성공"),
   ;
 
   private final String code;
