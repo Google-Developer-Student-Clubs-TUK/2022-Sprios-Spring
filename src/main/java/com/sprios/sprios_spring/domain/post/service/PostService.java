@@ -7,6 +7,7 @@ import com.sprios.sprios_spring.domain.post.dto.PostCreateRequest;
 import com.sprios.sprios_spring.domain.post.dto.PostInfoResponse;
 import com.sprios.sprios_spring.domain.post.entity.Post;
 import com.sprios.sprios_spring.domain.post.entity.PostImage;
+import com.sprios.sprios_spring.domain.post.exception.PostNotFoundException;
 import com.sprios.sprios_spring.domain.post.mapper.PostMapper;
 import com.sprios.sprios_spring.domain.post.repository.PostImageRepository;
 import com.sprios.sprios_spring.domain.post.repository.PostRepository;
@@ -47,5 +48,10 @@ public class PostService {
     List<Post> posts =
         postRepository.findAllByWriterId(writerId).orElseThrow(MemberNotFoundException::new);
     return postMapper.toDtoList(posts);
+  }
+
+  public PostInfoResponse getPostById(Long postId) {
+    Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+    return postMapper.toDto(post);
   }
 }
