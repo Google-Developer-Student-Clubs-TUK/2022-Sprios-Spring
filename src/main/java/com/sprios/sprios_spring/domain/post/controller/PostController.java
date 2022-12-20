@@ -17,8 +17,7 @@ import javax.validation.Valid;
 
 import java.util.List;
 
-import static com.sprios.sprios_spring.global.result.ResultCode.WRITER_POST_GET_SUCCESS;
-import static com.sprios.sprios_spring.global.result.ResultCode.POST_CREATE_SUCCESS;
+import static com.sprios.sprios_spring.global.result.ResultCode.*;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -34,6 +33,12 @@ public class PostController {
       @RequestPart(value = "postCreateRequest") @Valid PostCreateRequest postCreateRequest) {
     postService.createPost(postCreateRequest, loginMember, images);
     return ResponseEntity.ok(ResultResponse.of(POST_CREATE_SUCCESS));
+  }
+
+  @GetMapping("/{postId}")
+  public ResponseEntity<ResultResponse> getPost(@PathVariable Long postId) {
+    PostInfoResponse postInfoResponse = postService.getPostById(postId);
+    return ResponseEntity.ok(ResultResponse.of(POST_GET_SUCCESS, postInfoResponse));
   }
 
   @GetMapping("/writer")
