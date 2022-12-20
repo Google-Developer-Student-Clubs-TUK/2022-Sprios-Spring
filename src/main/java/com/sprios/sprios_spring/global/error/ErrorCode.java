@@ -12,10 +12,13 @@ public enum ErrorCode {
   INPUT_INVALID_VALUE(400, "G002", "잘못된 입력"),
   FILE_CONVERT_FAIL(500, "G003", "파일 변환 실패"),
 
-  // MemberDomain 도메인
+  // Member
   MEMBER_NOT_FOUND(400, "M001", "회원 찾기 실패"),
   MEMBER_ACCOUNT_DUPLICATED(400, "M002", "회원 아이디 중복"),
-  UN_AUTHORIZED_ACCESS(400, "M003", "승인되지 않은 접근");
+  UN_AUTHORIZED_ACCESS(400, "M003", "승인되지 않은 접근"),
+
+  // Post
+  POST_NOT_FOUND(400, "P001", "게시물 찾기 실패");
 
   private final int status;
   private final String code;
