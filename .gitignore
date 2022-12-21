@@ -40,3 +40,5 @@ out/
 .env
 /src/main/resources/*.yml
 /src/test/resources/*.yml
+
+gradle.properties
