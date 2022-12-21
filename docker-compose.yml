@@ -9,9 +9,17 @@ services:
     env_file: .env
     environment:
       TZ: Asia/Seoul
-    networks:
-      - sprios_backend
-    restart: always
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
 
-networks:
-  sprios_backend:
+  spring_boot:
+    container_name: spring_boot
+    image: ${SPRING_BOOT_IMAGE}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: ${MYSQL_URL}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
