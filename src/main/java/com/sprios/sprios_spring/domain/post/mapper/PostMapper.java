@@ -5,6 +5,7 @@ import com.sprios.sprios_spring.domain.member.mapper.MemberMapper;
 import com.sprios.sprios_spring.domain.post.dto.PostCreateRequest;
 import com.sprios.sprios_spring.domain.post.dto.PostInfoResponse;
 import com.sprios.sprios_spring.domain.post.entity.Post;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,5 +29,9 @@ public class PostMapper {
 
   public List<PostInfoResponse> toDtoList(List<Post> posts) {
     return posts.stream().map(this::toDto).collect(Collectors.toList());
+  }
+
+  public Page<PostInfoResponse> toDtoList(Page<Post> postList){
+    return postList.map(this::toDto);
   }
 }

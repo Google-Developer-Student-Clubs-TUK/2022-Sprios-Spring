@@ -22,6 +22,7 @@ public enum ResultCode {
   POST_CREATE_SUCCESS("P001", "게시물 생성 성공"),
   POST_GET_SUCCESS("P002", "게시물 조회 성공"),
   WRITER_POST_GET_SUCCESS("P003", "작성자의 게시물들 조회 성공"),
+  POST_PAGING_GET_SUCCESS("P004", "게시물들 페이징 조회 성공"),
   ;
 
   private final String code;
