@@ -19,11 +19,11 @@ import static com.sprios.sprios_spring.domain.member.controller.MemberUpdateCont
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @RequestMapping(MEMBER_API_URI)
 public class MemberUpdateController {
-  public static final String MEMBER_API_URI = "/api/member/update";
+  public static final String MEMBER_API_URI = "/api/members";
   private final MemberUpdateService memberUpdateService;
 
   @LoginRequired
-  @PostMapping
+  @PostMapping("/update")
   public ResponseEntity<ResultResponse> updateMember(@RequestParam MultipartFile uploadImage,
                                                     @RequestBody MemberUpdateProfileRequest memberUpdateProfileRequest) {
     memberUpdateService.updateMemberProfile(uploadImage, memberUpdateProfileRequest);
