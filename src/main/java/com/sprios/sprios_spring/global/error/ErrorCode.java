@@ -16,6 +16,7 @@ public enum ErrorCode {
   MEMBER_NOT_FOUND(400, "M001", "회원 찾기 실패"),
   MEMBER_ACCOUNT_DUPLICATED(400, "M002", "회원 아이디 중복"),
   UN_AUTHORIZED_ACCESS(400, "M003", "승인되지 않은 접근"),
+  MEMBER_UPDATE_FAIL(500, "M004", "회원 정보 갱신 실패"),
 
   // Post
   POST_NOT_FOUND(400, "P001", "게시물 찾기 실패");
