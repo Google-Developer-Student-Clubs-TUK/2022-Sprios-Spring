@@ -28,6 +28,6 @@ public class MemberUpdateController {
       @RequestPart (value = "image", required = false) MultipartFile uploadImage,
       @RequestPart (value = "memberUpdateProfileRequest") MemberUpdateProfileRequest memberUpdateProfileRequest) {
     memberUpdateService.updateMemberProfile(uploadImage, memberUpdateProfileRequest);
-    return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_IMAGEUPDATE_SUCCESS, true));
+    return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_UPDATE_SUCCESS, true));
   }
 }
