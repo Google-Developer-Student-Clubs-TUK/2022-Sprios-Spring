@@ -15,6 +15,8 @@ import com.sprios.sprios_spring.global.util.ImageUtil;
 import com.sprios.sprios_spring.global.vo.Image;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,5 +55,10 @@ public class PostService {
   public PostInfoResponse getPostById(Long postId) {
     Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
     return postMapper.toDto(post);
+  }
+
+  public Page<PostInfoResponse> getPostListWithPaging(PageRequest pageRequest) {
+    Page<Post> postPages = postRepository.findAll(pageRequest);
+    return postMapper.toDtoList(postPages);
   }
 }
