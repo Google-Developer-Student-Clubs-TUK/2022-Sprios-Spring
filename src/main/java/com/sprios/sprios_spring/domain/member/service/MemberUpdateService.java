@@ -38,6 +38,9 @@ public class MemberUpdateService {
 
   private Image uploadImgS3(MultipartFile file, Image oldImage) {
     s3Uploader.deleteImage(oldImage.getImgName(), MEMBER_S3_DIRNAME);
+    if(file == null) {
+      return ImageUtil.getDefaultImg();
+    }
     String imgUrl = s3Uploader.uploadImage(file, MEMBER_S3_DIRNAME);
     return ImageUtil.convertMultipartFiletoImage(file, imgUrl);
   }
