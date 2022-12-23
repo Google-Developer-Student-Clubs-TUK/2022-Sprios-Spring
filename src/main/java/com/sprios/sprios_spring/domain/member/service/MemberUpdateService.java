@@ -31,7 +31,7 @@ public class MemberUpdateService {
     final Member member = getLoginMember();
     member.setName(memberUpdateProfileRequest.getName());
     member.setIntroduce(memberUpdateProfileRequest.getIntroduce());
-    member.setAccount(member.getAccount());
+    member.setAccount(memberUpdateProfileRequest.getAccount());
     member.setImage(uploadImgS3(file, member.getImage()));
     memberRepository.save(member);
   }
