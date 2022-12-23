@@ -9,6 +9,8 @@ import com.sprios.sprios_spring.global.annotation.LoginRequired;
 import com.sprios.sprios_spring.global.result.ResultResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,5 +47,14 @@ public class PostController {
   public ResponseEntity<ResultResponse> getMemberPostList(@RequestParam Long id) {
     List<PostInfoResponse> postInfoResponseList = postService.getPostListByWriterId(id);
     return ResponseEntity.ok(ResultResponse.of(WRITER_POST_GET_SUCCESS, postInfoResponseList));
+  }
+
+  @GetMapping("/page/{page}")
+  public ResponseEntity<ResultResponse> getPostListWithPaging(
+      @PathVariable Integer page, @RequestParam(defaultValue = "10") Integer size) {
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<PostInfoResponse> postInfoResponseList = postService.getPostListWithPaging(pageRequest);
+    return ResponseEntity.ok(
+        ResultResponse.of(POST_PAGING_GET_SUCCESS, postInfoResponseList.getContent()));
   }
 }
