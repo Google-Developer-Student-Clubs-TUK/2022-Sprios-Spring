@@ -76,7 +76,7 @@ public class Member extends BaseEntity {
         .imgType(ImageType.PNG)
         .imgUrl(DEFAULT_IMAGE_URL)
         .imgUUID("base-UUID").build();
-    this.introduce = "";
+    this.introduce = introduce;
   }
 
   public void setEncryptedPassword(String encryptedPassword) {
