@@ -33,8 +33,8 @@ public class PostController {
   public ResponseEntity<ResultResponse> createPost(
       @LoginMember @ApiIgnore Member loginMember,
       @RequestPart(value = "images", required = false) List<MultipartFile> images,
-      @RequestPart(value = "postCreateRequest") @Valid PostCreateRequest postCreateRequest) {
-    postService.createPost(postCreateRequest, loginMember, images);
+      @RequestPart(value = "content") String content) {
+    postService.createPost(content, loginMember, images);
     return ResponseEntity.ok(ResultResponse.of(POST_CREATE_SUCCESS));
   }
 

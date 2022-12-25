@@ -34,8 +34,8 @@ public class PostService {
 
   @Transactional
   public void createPost(
-      PostCreateRequest postCreateRequest, Member loginMember, List<MultipartFile> imageFiles) {
-    Post post = postMapper.toEntity(postCreateRequest, loginMember);
+      String content, Member loginMember, List<MultipartFile> imageFiles) {
+    Post post = postMapper.toEntity(content, loginMember);
     postRepository.save(post);
     for (int i = 0; i < imageFiles.size(); i++) {
       MultipartFile imageFile = imageFiles.get(i);

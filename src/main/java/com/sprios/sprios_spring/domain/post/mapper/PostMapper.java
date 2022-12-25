@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class PostMapper {
-  public Post toEntity(PostCreateRequest postCreateRequest, Member loginMember) {
-    return Post.builder().content(postCreateRequest.getContent()).writer(loginMember).build();
+  public Post toEntity(String content, Member loginMember) {
+    return Post.builder().content(content).writer(loginMember).build();
   }
 
   public PostInfoResponse toDto(Post post) {
