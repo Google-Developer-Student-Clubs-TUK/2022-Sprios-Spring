@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,8 +33,8 @@ public class PostController {
   public ResponseEntity<ResultResponse> createPost(
       @LoginMember @ApiIgnore Member loginMember,
       @RequestPart(value = "images", required = false) List<MultipartFile> images,
-      @RequestPart(value = "postCreateRequest") @Valid PostCreateRequest postCreateRequest) {
-    postService.createPost(postCreateRequest, loginMember, images);
+      @RequestPart(value = "content") String content) {
+    postService.createPost(content, loginMember, images);
     return ResponseEntity.ok(ResultResponse.of(POST_CREATE_SUCCESS));
   }
 
@@ -52,7 +53,7 @@ public class PostController {
   @GetMapping("/page/{page}")
   public ResponseEntity<ResultResponse> getPostListWithPaging(
       @PathVariable Integer page, @RequestParam(defaultValue = "10") Integer size) {
-    PageRequest pageRequest = PageRequest.of(page, size);
+    PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
     Page<PostInfoResponse> postInfoResponseList = postService.getPostListWithPaging(pageRequest);
     return ResponseEntity.ok(
         ResultResponse.of(POST_PAGING_GET_SUCCESS, postInfoResponseList.getContent()));
