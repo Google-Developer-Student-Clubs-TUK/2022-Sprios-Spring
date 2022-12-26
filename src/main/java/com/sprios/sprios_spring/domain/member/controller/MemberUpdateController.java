@@ -26,7 +26,11 @@ public class MemberUpdateController {
   @PostMapping("/update")
   public ResponseEntity<ResultResponse> updateMember(
       @RequestPart (value = "image", required = false) MultipartFile uploadImage,
-      @RequestPart (value = "memberUpdateProfileRequest") MemberUpdateProfileRequest memberUpdateProfileRequest) {
+      @RequestPart String name,
+      @RequestPart String account,
+      @RequestPart String introduce) {
+    MemberUpdateProfileRequest memberUpdateProfileRequest = MemberUpdateProfileRequest
+        .builder().name(name).account(account).introduce(introduce).build();
     memberUpdateService.updateMemberProfile(uploadImage, memberUpdateProfileRequest);
     return ResponseEntity.ok(ResultResponse.of(ResultCode.MEMBER_UPDATE_SUCCESS, true));
   }
