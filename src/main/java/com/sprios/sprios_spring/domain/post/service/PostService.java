@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +49,9 @@ public class PostService {
 
   public List<PostInfoResponse> getPostListByWriterId(Long writerId) {
     List<Post> posts =
-        postRepository.findAllByWriterId(writerId).orElseThrow(MemberNotFoundException::new);
+        postRepository
+            .findAllByWriterId(writerId, Sort.by("id").descending())
+            .orElseThrow(MemberNotFoundException::new);
     return postMapper.toDtoList(posts);
   }
 
