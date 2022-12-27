@@ -79,6 +79,15 @@ public class Member extends BaseEntity {
     this.introduce = introduce;
   }
 
+  public void setIntroduce(String introduce) {
+    if(introduce.equals("") || introduce == null) {
+      this.introduce = "";
+    }
+    else {
+      this.introduce = introduce;
+    }
+  }
+
   public void setEncryptedPassword(String encryptedPassword) {
     this.password = encryptedPassword;
   }
