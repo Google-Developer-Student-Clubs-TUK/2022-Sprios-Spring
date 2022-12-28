@@ -80,7 +80,7 @@ public class Member extends BaseEntity {
   }
 
   public void setIntroduce(String introduce) {
-    if(introduce.equals("") || introduce == null) {
+    if(introduce == null || introduce.isBlank()) {
       this.introduce = "";
     }
     else {
