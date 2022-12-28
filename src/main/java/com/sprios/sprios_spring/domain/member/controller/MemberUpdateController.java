@@ -28,7 +28,7 @@ public class MemberUpdateController {
       @RequestPart (value = "image", required = false) MultipartFile uploadImage,
       @RequestPart String name,
       @RequestPart String account,
-      @RequestPart String introduce) {
+      @RequestPart (required = false) String introduce) {
     MemberUpdateProfileRequest memberUpdateProfileRequest = MemberUpdateProfileRequest
         .builder().name(name).account(account).introduce(introduce).build();
     memberUpdateService.updateMemberProfile(uploadImage, memberUpdateProfileRequest);
